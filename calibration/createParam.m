@@ -1,0 +1,82 @@
+function param=createParam()
+% Fixed inputs and starting guesses. Male transition rates are updated during fitting.
+rho_pro = 0.3; rho_rec = 1.24;
+raw_param = {
+    'piL',       340100;
+    'piH',       17900;
+    'piM1',      360840;
+    'piM2',      11160;
+    'qL',        0.05;
+    'qH',        0.05;
+    'qM1',       0;
+    'qM2',       0;
+    'zetL',      0.5;
+    'zetH',      0.5;
+    'zetM1',     0.5;
+    'zetM2',     0.5;
+    'betMF',     0.23;
+    'betFM',     0.3;
+    'betMM',     0.35;
+    'cL',        1.1;
+    'cM2',       4;
+    'aM2',       0.01;
+    'aH',        0.23;
+    'rM2',       0.9;
+    'rH',        0.23;
+    'etaL',      0.4;
+    'etaH',      0.4;
+    'etaM1',     0.4;
+    'etaM2',     0.4;
+    'thetaL',    0.9;
+    'thetaH',    0.9;
+    'thetaM1',   0.9;
+    'thetaM2',   0.9;
+    'xiL',       0.01;
+    'xiH',       0.01;
+    'xiM1',      0;
+    'xiM2',      0;
+    'mu',        1/65;
+    'ev',        0.95;
+    'sigL',      3;
+    'sigH',      3;
+    'sigM1',     3;
+    'sigM2',     3;
+    'psi_proL',  0.017;
+    'psi_proH',  0.017;
+    'psi_proM1', rho_pro*0.017;
+    'psi_proM2', rho_pro*0.017;
+    'psi_recL',  0.4;
+    'psi_recH',  0.4;
+    'psi_recM1', rho_rec*0.4;
+    'psi_recM2', rho_rec*0.4;
+    'g_proL',    0.05;
+    'g_proH',    0.05;
+    'g_proM1',   rho_pro*0.05;
+    'g_proM2',   rho_pro*0.05;
+    'g_recL',    0.03;
+    'g_recH',    0.03;
+    'g_recM1',   rho_rec*0.03;
+    'g_recM2',   rho_rec*0.03;
+    'wL',        0.45;
+    'wH',        0.45;
+    'wM1',       0.45;
+    'wM2',       0.45;
+    'delL',      0.15;
+    'delH',      0.15;
+    'delM1',     0;
+    'delM2',     0;
+    'rho_pro',   rho_pro;
+    'rho_rec',   rho_rec;
+};
+nParam = size(raw_param, 1);
+param = struct('name', {}, 'value', {}, 'range', {}, 'fit_mask', {});
+for i = 1:nParam
+    param(i).name     = raw_param{i, 1};
+    param(i).value    = raw_param{i, 2};
+    param(i).range    = [];
+    param(i).fit_mask = false;
+end
+% Optimization bounds
+param(strcmp({param.name},'rho_pro')).range = [0.2,0.9];
+param(strcmp({param.name},'rho_rec')).range = [1,1.5];
+end
